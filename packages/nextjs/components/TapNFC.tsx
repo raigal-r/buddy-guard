@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from "react";
 import { execHaloCmdWeb } from "@arx-research/libhalo/api/web.js";
 import sss from "shamirs-secret-sharing";
@@ -44,15 +45,20 @@ const TapNFC: React.FC = () => {
     }
   };
 
+  function arr2hex(buffer: ArrayBuffer) {
+    return [...new Uint8Array(buffer)].map(x => x.toString(16).padStart(2, "0")).join("");
+  }
+
   const handleSecretSharing = () => {
     const secret = Buffer.from(secretA);
     const shares = sss.split(secret, { shares: 3, threshold: 2 });
-    console.log("shares");
+    console.log("secretA", secretA);
+    console.log("shares", shares);
     const newShares = sss.split(secret, { shares: 3, threshold: 2 });
     setShares(newShares);
-    const recovered = sss.combine(shares.slice(1, 2));
+    const recovered = sss.combine(shares.slice(0, 2));
     setRecoveres(recovered);
-    console.log(recovered.toString()); // 'secret key'
+    console.log("recovered", Buffer.from(arr2hex(recovered.buffer), "hex").toString("utf8"));
   };
 
   const executeNFC = (method: string | null) => {
@@ -92,6 +98,9 @@ const TapNFC: React.FC = () => {
       <input type="text" placeholder="Surname" value={surname} onChange={handleInputChange} />
       <input type="text" placeholder="Hotel" value={hotel} onChange={handleInputChange} />
       <input type="text" placeholder="Phone Number" value={phoneNumber} onChange={handleInputChange} />
+      <button className="btn btn-primary" onClick={() => handleSecretSharing()} id="btn-auto">
+        Secret
+      </button>
       <button className="btn btn-primary" onClick={() => executeNFC(null)} id="btn-auto">
         Sign using auto-detected method
       </button>
@@ -101,14 +110,14 @@ const TapNFC: React.FC = () => {
       <button className="btn btn-secondary" onClick={() => executeNFC("webnfc")} id="btn-webnfc">
         Sign using WebNFC
       </button>
-      <p>Shares:</p>
+      {/* <p>Shares:</p>
       <pre id="shares" style={{ whiteSpace: "pre-wrap", wordBreak: "break-all" }}>
         {shares.map(buffer => buffer.toString("utf8")).join(", ")}
       </pre>
       <p>Recovered</p>
       <pre id="recovered" style={{ whiteSpace: "pre-wrap", wordBreak: "break-all" }}>
         {recovered ? recovered.map(buffer => buffer.toString("utf8")).join(", ") : ""}{" "}
-      </pre>
+      </pre> */}
     </div>
   );
 };
