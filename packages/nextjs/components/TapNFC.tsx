@@ -6,10 +6,11 @@ import sss from "shamirs-secret-sharing";
 
 const TapNFC: React.FC = () => {
   const [legacySignCommand] = useState(false);
-  const [digest, setDigest] = useState("0101010101010101010101010101010101010101010101010101010101010101");
+  const [digest] = useState("0101010101010101010101010101010101010101010101010101010101010101");
   const [keyNo] = useState("1");
   const [password] = useState("");
   const [statusText, setStatusText] = useState("Please click on one of the buttons below.");
+  const [secretA, setSecretA] = useState("");
 
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
@@ -20,15 +21,8 @@ const TapNFC: React.FC = () => {
   const [recovered, setRecoveres] = useState<Buffer[]>([]);
 
   useEffect(() => {
-    let newDigest = `${name}${surname}${hotel}${phoneNumber}`;
-    if (newDigest.length > 32) {
-      // Truncate to 32 characters
-      newDigest = newDigest.substring(0, 32);
-    } else {
-      // Pad with zeros to make it 32 characters
-      newDigest = newDigest.padEnd(32, "0");
-    }
-    setDigest(newDigest);
+    const newSecret = `${name}${surname}${hotel}${phoneNumber}`;
+    setSecretA(newSecret);
   }, [name, surname, hotel, phoneNumber]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -51,7 +45,7 @@ const TapNFC: React.FC = () => {
   };
 
   const handleSecretSharing = () => {
-    const secret = Buffer.from(digest);
+    const secret = Buffer.from(secretA);
     const shares = sss.split(secret, { shares: 3, threshold: 2 });
     console.log("shares");
     const newShares = sss.split(secret, { shares: 3, threshold: 2 });
