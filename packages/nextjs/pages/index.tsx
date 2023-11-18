@@ -1,4 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
+import TapNFC from "../components/TapNFC";
 import { execHaloCmdWeb } from "@arx-research/libhalo/api/web.js";
 import { Dialog, Transition } from "@headlessui/react";
 import { NfcCardSignMessageResult } from "jubmoji-api";
@@ -13,16 +14,16 @@ export type ForegroundTapModalProps = {
 const Home: NextPage = () => {
   const [isForeground, setIsForeground] = useState(false);
 
-  const [pubKey, setPubKey] = useState<string>("");
-  const [rawSig, setRawSig] = useState<string>("");
-  const [digest, setDigest] = useState<string>("");
+  // const [pubKey, setPubKey] = useState<string>("");
+  // const [rawSig, setRawSig] = useState<string>("");
+  // const [digest, setDigest] = useState<string>("");
 
-  useEffect(() => {
-    console.log("pubKey", pubKey);
-    console.log("rawSig", rawSig);
-    console.log("digest", digest);
-    setIsForeground(false);
-  }, [pubKey]);
+  // useEffect(() => {
+  //   console.log("pubKey", pubKey);
+  //   console.log("rawSig", rawSig);
+  //   console.log("digest", digest);
+  //   setIsForeground(false);
+  // }, [pubKey]);
 
   return (
     <>
@@ -36,7 +37,7 @@ const Home: NextPage = () => {
           )}
           {isForeground && (
             <section className="relative z-500">
-              <ForegroundTapModal
+              {/* <ForegroundTapModal
                 message="Get zodiac sign compatibility"
                 onTap={async (args: NfcCardSignMessageResult) => {
                   // Handle the tap event here
@@ -44,7 +45,8 @@ const Home: NextPage = () => {
                   setRawSig(JSON.stringify(args.rawSig));
                   setDigest(args.digest);
                 }}
-              />
+              /> */}
+              <TapNFC />
             </section>
           )}
         </>
