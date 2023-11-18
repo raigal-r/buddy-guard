@@ -4763,7 +4763,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:*, @types/react@npm:^18.0.15, @types/react@npm:^18.0.21":
+"@types/react@npm:*, @types/react@npm:^18, @types/react@npm:^18.0.15, @types/react@npm:^18.0.21":
   version: 18.2.37
   resolution: "@types/react@npm:18.2.37"
   dependencies:
@@ -16112,7 +16112,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react@npm:~18.2.0":
+"react@npm:^18.2.0, react@npm:~18.2.0":
   version: 18.2.0
   resolution: "react@npm:18.2.0"
   dependencies:
@@ -16858,12 +16858,14 @@ __metadata:
   dependencies:
     "@arx-research/libhalo": ^1.2.19
     "@headlessui/react": ^1.7.17
+    "@types/react": ^18
     "@types/react-dom": ^18
     husky: ~8.0.3
     jubmoji-api: ^0.1.0
     lint-staged: ~13.2.2
     node-gyp: ^10.0.1
     qrcode.react: ^3.1.0
+    react: ^18.2.0
     react-dom: ^18.2.0
     react-hot-toast: ^2.4.1
     wagmi: ^1.4.7
