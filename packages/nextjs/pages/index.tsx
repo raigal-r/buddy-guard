@@ -3,7 +3,7 @@ import type { NextPage } from "next";
 import { BugAntIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { MetaHeader } from "~~/components/MetaHeader";
 
-const Home: NextPage = () => {
+const Main: NextPage = () => {
   return (
     <>
       <MetaHeader />
@@ -37,8 +37,8 @@ const Home: NextPage = () => {
               <BugAntIcon className="h-8 w-8 fill-secondary" />
               <p>
                 Tinker with your smart contract using the{" "}
-                <Link href="/debug" passHref className="link">
-                  Debug Contract
+                <Link href="/main" passHref className="link">
+                  Main Page
                 </Link>{" "}
                 tab.
               </p>
@@ -60,4 +60,4 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export default Main;
