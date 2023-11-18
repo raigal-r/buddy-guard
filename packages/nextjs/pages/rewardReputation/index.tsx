@@ -1,14 +1,11 @@
 import { useEffect } from "react";
 import type { NextPage } from "next";
 import { hardhat } from "viem/chains";
-import { PaginationButton } from "~~/components/blockexplorer/PaginationButton";
-import { SearchBar } from "~~/components/blockexplorer/SearchBar";
-import { TransactionsTable } from "~~/components/blockexplorer/TransactionsTable";
 import { useFetchBlocks } from "~~/hooks/scaffold-eth";
 import { getTargetNetwork, notification } from "~~/utils/scaffold-eth";
 
-const RewardReputaion: NextPage = () => {
-  const { blocks, transactionReceipts, currentPage, totalBlocks, setCurrentPage, error } = useFetchBlocks();
+const RewardReputation: NextPage = () => {
+  const { error } = useFetchBlocks();
 
   useEffect(() => {
     if (getTargetNetwork().id === hardhat.id && error) {
@@ -50,12 +47,9 @@ const RewardReputaion: NextPage = () => {
 
   return (
     <div className="container mx-auto my-10">
-      <p>HOME</p>
-      <SearchBar />
-      <TransactionsTable blocks={blocks} transactionReceipts={transactionReceipts} />
-      <PaginationButton currentPage={currentPage} totalItems={Number(totalBlocks)} setCurrentPage={setCurrentPage} />
+      <div className="flex items-center mb-5 space-x-3 mx-5">RewardReputation</div>
     </div>
   );
 };
 
-export default RewardReputaion;
+export default RewardReputation;

@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 import { hardhat } from "viem/chains";
 import { useGlobalState } from "~~/services/store/store";
 import { getTargetNetwork } from "~~/utils/scaffold-eth";
@@ -11,7 +12,7 @@ export const Footer = () => {
   const isLocalNetwork = getTargetNetwork().id === hardhat.id;
 
   return (
-    <div className="min-h-0 py-5 px-1 mb-11 lg:mb-0">
+    <div className="min-h-0 py-5 px-1 mb-3 lg:mb-0">
       <div>
         <div className="fixed flex justify-between items-center w-full z-10 p-4 bottom-0 left-0 pointer-events-none">
           <div className="flex flex-col md:flex-row gap-2 pointer-events-auto">
@@ -53,7 +54,10 @@ export const Footer = () => {
                 target="_blank"
                 rel="noreferrer"
               >
-                <span>😎</span>
+                <div className="flex relative w-8 h-10">
+                  {" "}
+                  <Image alt="SE2 logo" className="cursor-pointer" fill src="/logo.png" />
+                </div>
               </a>
             </div>
           </div>
