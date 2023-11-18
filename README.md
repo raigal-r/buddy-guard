@@ -5,7 +5,7 @@ https://gnosis-chiado.blockscout.com/address/0xD2646C2629F237Ec1a03fc1d6ef7f9534
 
 https://goerli.arbiscan.io/address/0xd2646c2629f237ec1a03fc1d6ef7f953410bc788
 
-
+https://testnet-zkevm.polygonscan.com/address/0xd2646c2629f237ec1a03fc1d6ef7f953410bc788
 
 # 🏗 Scaffold-ETH 2
 
