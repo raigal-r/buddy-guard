@@ -1,8 +1,9 @@
 ## Network Deployed
-https://sepolia.etherscan.io/address/0x6E3fDD9971e6fACED6554528A0706d594C9F580B#code 
+https://sepolia.etherscan.io/address/0x6E3fDD9971e6fACED6554528A0706d594C9F580B 
+
 https://gnosis-chiado.blockscout.com/address/0xD2646C2629F237Ec1a03fc1d6ef7f953410BC788
 
-
+https://goerli.arbiscan.io/address/0xd2646c2629f237ec1a03fc1d6ef7f953410bc788
 
 
 
