@@ -1,14 +1,59 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { execHaloCmdWeb } from "@arx-research/libhalo/api/web.js";
+import sss from "shamirs-secret-sharing";
 
 // Assuming the library is installed and can be imported like this
 
 const TapNFC: React.FC = () => {
   const [legacySignCommand] = useState(false);
-  const [digest] = useState("0101010101010101010101010101010101010101010101010101010101010101");
+  const [digest, setDigest] = useState("0101010101010101010101010101010101010101010101010101010101010101");
   const [keyNo] = useState("1");
   const [password] = useState("");
   const [statusText, setStatusText] = useState("Please click on one of the buttons below.");
+
+  const [name, setName] = useState("");
+  const [surname, setSurname] = useState("");
+  const [hotel, setHotel] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+
+  const [shares, setShares] = useState<Buffer[]>([]);
+  const [recovered, setRecoveres] = useState<Buffer[]>([]);
+
+  useEffect(() => {
+    const newDigest = `${name}${surname}${hotel}${phoneNumber}`;
+
+    setDigest(newDigest);
+  }, [name, surname, hotel, phoneNumber]);
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    switch (event.target.placeholder) {
+      case "Name":
+        setName(event.target.value);
+        break;
+      case "Surname":
+        setSurname(event.target.value);
+        break;
+      case "Hotel":
+        setHotel(event.target.value);
+        break;
+      case "Phone Number":
+        setPhoneNumber(event.target.value);
+        break;
+      default:
+        break;
+    }
+  };
+
+  const handleSecretSharing = () => {
+    const secret = Buffer.from(digest);
+    const shares = sss.split(secret, { shares: 3, threshold: 2 });
+    console.log("shares");
+    const newShares = sss.split(secret, { shares: 3, threshold: 2 });
+    setShares(newShares);
+    const recovered = sss.combine(shares.slice(3, 7));
+    setRecoveres(recovered);
+    console.log(recovered.toString()); // 'secret key'
+  };
 
   const executeNFC = (method: string | null) => {
     setStatusText("Tap the tag to the back of your smartphone and hold it for a while.");
@@ -27,7 +72,9 @@ const TapNFC: React.FC = () => {
 
     execHaloCmdWeb(command, options)
       .then((res: any) => {
-        setStatusText(JSON.stringify(res, null, 4));
+        //setStatusText(JSON.stringify(res, null, 4));
+        console.log(JSON.stringify(res, null, 4));
+        handleSecretSharing();
       })
       .catch((e: Error) => {
         console.error("execHaloCmdWeb error", e);
@@ -41,6 +88,10 @@ const TapNFC: React.FC = () => {
       <pre id="statusText" style={{ whiteSpace: "pre-wrap", wordBreak: "break-all" }}>
         {statusText}
       </pre>
+      <input type="text" placeholder="Name" value={name} onChange={handleInputChange} />
+      <input type="text" placeholder="Surname" value={surname} onChange={handleInputChange} />
+      <input type="text" placeholder="Hotel" value={hotel} onChange={handleInputChange} />
+      <input type="text" placeholder="Phone Number" value={phoneNumber} onChange={handleInputChange} />
 
       <button className="btn btn-primary" onClick={() => executeNFC(null)} id="btn-auto">
         Sign using auto-detected method
@@ -51,6 +102,10 @@ const TapNFC: React.FC = () => {
       <button className="btn btn-secondary" onClick={() => executeNFC("webnfc")} id="btn-webnfc">
         Sign using WebNFC
       </button>
+      <p>Shares:</p>
+      {shares}
+      <p>Recovered</p>
+      {recovered}
     </div>
   );
 };

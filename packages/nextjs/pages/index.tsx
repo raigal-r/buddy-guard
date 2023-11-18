@@ -12,8 +12,6 @@ export type ForegroundTapModalProps = {
 };
 
 const Home: NextPage = () => {
-  const [isForeground, setIsForeground] = useState(false);
-
   // const [pubKey, setPubKey] = useState<string>("");
   // const [rawSig, setRawSig] = useState<string>("");
   // const [digest, setDigest] = useState<string>("");
@@ -30,25 +28,9 @@ const Home: NextPage = () => {
       <MetaHeader />
       <div className="flex items-center flex-col flex-grow pt-10">
         <>
-          {!isForeground && (
-            <div>
-              <button onClick={() => setIsForeground(true)}>BUTTON</button>
-            </div>
-          )}
-          {isForeground && (
-            <section className="relative z-500">
-              {/* <ForegroundTapModal
-                message="Get zodiac sign compatibility"
-                onTap={async (args: NfcCardSignMessageResult) => {
-                  // Handle the tap event here
-                  setPubKey(args.pubKey);
-                  setRawSig(JSON.stringify(args.rawSig));
-                  setDigest(args.digest);
-                }}
-              /> */}
-              <TapNFC />
-            </section>
-          )}
+          <div>
+            <TapNFC />
+          </div>
         </>
       </div>
     </>

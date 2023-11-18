@@ -16868,6 +16868,7 @@ __metadata:
     react: ^18.2.0
     react-dom: ^18.2.0
     react-hot-toast: ^2.4.1
+    shamirs-secret-sharing: ^1.0.1
     wagmi: ^1.4.7
   languageName: unknown
   linkType: soft
@@ -17034,6 +17035,13 @@ __metadata:
     charenc: ">= 0.0.1"
     crypt: ">= 0.0.1"
   checksum: da9f47e949988e2f595ef19733fd1dc736866ef6de4e421a55c13b444c03ae532e528b7350ae6ea55d9fb053be61d4648ec2cd5250d46cfdbdf4f6b4e763713d
+  languageName: node
+  linkType: hard
+
+"shamirs-secret-sharing@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "shamirs-secret-sharing@npm:1.0.1"
+  checksum: 6b231aed536b475a8650d024b2edf2e967d63e6d31405f304b4a46b60e83c1a00fd924ca1428386faf91591c0bbb4d0cb51df5ec91f9e92b17b88d36e5ed68fb
   languageName: node
   linkType: hard
 
