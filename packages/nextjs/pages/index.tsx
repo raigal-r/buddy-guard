@@ -3,7 +3,7 @@ import type { NextPage } from "next";
 import { BugAntIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { MetaHeader } from "~~/components/MetaHeader";
 
-const Main: NextPage = () => {
+const Home: NextPage = () => {
   return (
     <>
       <MetaHeader />
@@ -60,4 +60,4 @@ const Main: NextPage = () => {
   );
 };
 
-export default Main;
+export default Home;

@@ -2,13 +2,11 @@ import { useEffect } from "react";
 import type { NextPage } from "next";
 import { hardhat } from "viem/chains";
 import { PaginationButton } from "~~/components/blockexplorer/PaginationButton";
-import { SearchBar } from "~~/components/blockexplorer/SearchBar";
-import { TransactionsTable } from "~~/components/blockexplorer/TransactionsTable";
 import { useFetchBlocks } from "~~/hooks/scaffold-eth";
 import { getTargetNetwork, notification } from "~~/utils/scaffold-eth";
 
-const Home: NextPage = () => {
-  const { blocks, transactionReceipts, currentPage, totalBlocks, setCurrentPage, error } = useFetchBlocks();
+const Main: NextPage = () => {
+  const { currentPage, totalBlocks, setCurrentPage, error } = useFetchBlocks();
 
   useEffect(() => {
     if (getTargetNetwork().id === hardhat.id && error) {
@@ -50,12 +48,11 @@ const Home: NextPage = () => {
 
   return (
     <div className="container mx-auto my-10">
-      <p>HOME</p>
-      <SearchBar />
-      <TransactionsTable blocks={blocks} transactionReceipts={transactionReceipts} />
+      <p>Main</p>
+
       <PaginationButton currentPage={currentPage} totalItems={Number(totalBlocks)} setCurrentPage={setCurrentPage} />
     </div>
   );
 };
 
-export default Home;
+export default Main;
