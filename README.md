@@ -13,6 +13,13 @@ https://goerli.etherscan.io/address/0x305bfBBE058aaCD760E7d6D611dbF780e25b5680
 Buddy-Guard Order Staking with ApeCoin
 https://goerli.etherscan.io/tx/0x8816f1179cfa77fc36c51870fc6a91e4adf796c64fe28ef5499c215af77b2759
 
+### GHO Use Case
+Buddy-Guard Order Staking with GHO
+https://goerli.etherscan.io/tx/0x6c59ce4e71fc9731c16a125e45092e4df81207e883ab1cf8754c8166376a08c6
+
+
+
+
 # 🏗 Scaffold-ETH 2
 
 🧪 An open-source, up-to-date toolkit for building decentralized applications (dapps) on the Ethereum blockchain. It's designed to make it easier for developers to create and deploy smart contracts and build user interfaces that interact with those contracts.
