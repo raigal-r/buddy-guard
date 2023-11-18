@@ -72,7 +72,7 @@ const TapNFC: React.FC = () => {
 
     execHaloCmdWeb(command, options)
       .then((res: any) => {
-        //setStatusText(JSON.stringify(res, null, 4));
+        setStatusText(JSON.stringify(res, null, 4));
         console.log(JSON.stringify(res, null, 4));
         handleSecretSharing();
       })
