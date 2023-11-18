@@ -5,7 +5,13 @@ https://gnosis-chiado.blockscout.com/address/0xD2646C2629F237Ec1a03fc1d6ef7f9534
 
 https://goerli.arbiscan.io/address/0xd2646c2629f237ec1a03fc1d6ef7f953410bc788
 
+https://testnet-zkevm.polygonscan.com/address/0xd2646c2629f237ec1a03fc1d6ef7f953410bc788
 
+https://goerli.etherscan.io/address/0x305bfBBE058aaCD760E7d6D611dbF780e25b5680
+
+### ApeCoin Use Case
+Buddy-Guard Order Staking with ApeCoin
+https://goerli.etherscan.io/tx/0x8816f1179cfa77fc36c51870fc6a91e4adf796c64fe28ef5499c215af77b2759
 
 # 🏗 Scaffold-ETH 2
 
