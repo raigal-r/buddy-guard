@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from "react";
 import { execHaloCmdWeb } from "@arx-research/libhalo/api/web.js";
+import { ethers } from "ethers";
 import sss from "shamirs-secret-sharing";
 
 // Assuming the library is installed and can be imported like this
@@ -77,7 +78,7 @@ const TapNFC: React.FC = () => {
     };
 
     execHaloCmdWeb(command, options)
-      .then((res: any) => {
+      .then(async (res: any) => {
         setStatusText(JSON.stringify(res, null, 4));
         console.log(JSON.stringify(res, null, 4));
         handleSecretSharing();

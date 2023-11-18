@@ -4,6 +4,7 @@ import { execHaloCmdWeb } from "@arx-research/libhalo/api/web.js";
 import { Dialog, Transition } from "@headlessui/react";
 import { NfcCardSignMessageResult } from "jubmoji-api";
 import type { NextPage } from "next";
+import DirectMessage from "~~/components/DirectMessage";
 import { MetaHeader } from "~~/components/MetaHeader";
 
 export type ForegroundTapModalProps = {
@@ -30,6 +31,7 @@ const Home: NextPage = () => {
         <>
           <div>
             <TapNFC />
+            <DirectMessage />
           </div>
         </>
       </div>
