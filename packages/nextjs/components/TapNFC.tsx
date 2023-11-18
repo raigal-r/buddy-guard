@@ -20,8 +20,14 @@ const TapNFC: React.FC = () => {
   const [recovered, setRecoveres] = useState<Buffer[]>([]);
 
   useEffect(() => {
-    const newDigest = `${name}${surname}${hotel}${phoneNumber}`;
-
+    let newDigest = `${name}${surname}${hotel}${phoneNumber}`;
+    if (newDigest.length > 32) {
+      // Truncate to 32 characters
+      newDigest = newDigest.substring(0, 32);
+    } else {
+      // Pad with zeros to make it 32 characters
+      newDigest = newDigest.padEnd(32, "0");
+    }
     setDigest(newDigest);
   }, [name, surname, hotel, phoneNumber]);
 
