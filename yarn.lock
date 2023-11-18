@@ -14642,7 +14642,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"node-gyp@npm:latest":
+"node-gyp@npm:^10.0.1, node-gyp@npm:latest":
   version: 10.0.1
   resolution: "node-gyp@npm:10.0.1"
   dependencies:
@@ -16862,6 +16862,7 @@ __metadata:
     husky: ~8.0.3
     jubmoji-api: ^0.1.0
     lint-staged: ~13.2.2
+    node-gyp: ^10.0.1
     qrcode.react: ^3.1.0
     react-dom: ^18.2.0
     react-hot-toast: ^2.4.1
