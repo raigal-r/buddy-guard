@@ -50,7 +50,7 @@ const TapNFC: React.FC = () => {
     console.log("shares");
     const newShares = sss.split(secret, { shares: 3, threshold: 2 });
     setShares(newShares);
-    const recovered = sss.combine(shares.slice(3, 7));
+    const recovered = sss.combine(shares.slice(1, 2));
     setRecoveres(recovered);
     console.log(recovered.toString()); // 'secret key'
   };
@@ -92,7 +92,6 @@ const TapNFC: React.FC = () => {
       <input type="text" placeholder="Surname" value={surname} onChange={handleInputChange} />
       <input type="text" placeholder="Hotel" value={hotel} onChange={handleInputChange} />
       <input type="text" placeholder="Phone Number" value={phoneNumber} onChange={handleInputChange} />
-
       <button className="btn btn-primary" onClick={() => executeNFC(null)} id="btn-auto">
         Sign using auto-detected method
       </button>
@@ -103,9 +102,13 @@ const TapNFC: React.FC = () => {
         Sign using WebNFC
       </button>
       <p>Shares:</p>
-      {shares}
+      <pre id="shares" style={{ whiteSpace: "pre-wrap", wordBreak: "break-all" }}>
+        {shares.map(buffer => buffer.toString("utf8")).join(", ")}
+      </pre>
       <p>Recovered</p>
-      {recovered}
+      <pre id="recovered" style={{ whiteSpace: "pre-wrap", wordBreak: "break-all" }}>
+        {recovered ? recovered.map(buffer => buffer.toString("utf8")).join(", ") : ""}{" "}
+      </pre>
     </div>
   );
 };
