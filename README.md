@@ -1,3 +1,11 @@
+## Network Deployed
+https://sepolia.etherscan.io/address/0x6E3fDD9971e6fACED6554528A0706d594C9F580B#code 
+https://gnosis-chiado.blockscout.com/address/0xD2646C2629F237Ec1a03fc1d6ef7f953410BC788
+
+
+
+
+
 # 🏗 Scaffold-ETH 2
 
 🧪 An open-source, up-to-date toolkit for building decentralized applications (dapps) on the Ethereum blockchain. It's designed to make it easier for developers to create and deploy smart contracts and build user interfaces that interact with those contracts.
