@@ -97,35 +97,21 @@ const TapNFC: React.FC = () => {
   return (
     <div className="container mt-3 mb-5">
       <strong>Status text:</strong>
-      <pre id="statusText" style={{ whiteSpace: "pre-wrap", wordBreak: "break-all" }}>
+      {/* <pre id="statusText" style={{ whiteSpace: "pre-wrap", wordBreak: "break-all" }}>
         {statusText}
-      </pre>
+      </pre> */}
       <input type="text" placeholder="Name" value={name} onChange={handleInputChange} />
       <input type="text" placeholder="Surname" value={surname} onChange={handleInputChange} />
       <input type="text" placeholder="Hotel" value={hotel} onChange={handleInputChange} />
       <input type="text" placeholder="Phone Number" value={phoneNumber} onChange={handleInputChange} />
       <button className="btn btn-primary" onClick={() => handleSecretSharing()} id="btn-auto">
-        Secret
+        Register Personal Information
       </button>
       <Link href="./main">
         <button className="btn btn-primary" onClick={() => executeNFC(null)} id="btn-auto">
-          Sign using auto-detected method
+          Sign In
         </button>
       </Link>
-      <button className="btn btn-secondary" onClick={() => executeNFC("credential")} id="btn-credential">
-        Sign using Credential API
-      </button>
-      <button className="btn btn-secondary" onClick={() => executeNFC("webnfc")} id="btn-webnfc">
-        Sign using WebNFC
-      </button>
-      {/* <p>Shares:</p>
-      <pre id="shares" style={{ whiteSpace: "pre-wrap", wordBreak: "break-all" }}>
-        {shares.map(buffer => buffer.toString("utf8")).join(", ")}
-      </pre>
-      <p>Recovered</p>
-      <pre id="recovered" style={{ whiteSpace: "pre-wrap", wordBreak: "break-all" }}>
-        {recovered ? recovered.map(buffer => buffer.toString("utf8")).join(", ") : ""}{" "}
-      </pre> */}
     </div>
   );
 };
