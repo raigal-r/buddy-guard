@@ -1,5 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from "react";
+import { useContext } from "react";
+import Link from "next/link";
+import { StatusContext } from "../pages/_app";
 import { execHaloCmdWeb } from "@arx-research/libhalo/api/web.js";
 import { ethers } from "ethers";
 import sss from "shamirs-secret-sharing";
@@ -11,7 +14,7 @@ const TapNFC: React.FC = () => {
   const [digest] = useState("0101010101010101010101010101010101010101010101010101010101010101");
   const [keyNo] = useState("1");
   const [password] = useState("");
-  const [statusText, setStatusText] = useState("Please click on one of the buttons below.");
+  const [statusText, setStatusTextA] = useState("Please click on one of the buttons below.");
   const [secretA, setSecretA] = useState("");
 
   const [name, setName] = useState("");
@@ -21,6 +24,7 @@ const TapNFC: React.FC = () => {
 
   const [shares, setShares] = useState<Buffer[]>([]);
   const [recovered, setRecoveres] = useState<Buffer[]>([]);
+  const { setStatusText } = useContext(StatusContext);
 
   useEffect(() => {
     const newSecret = `${name}${surname}${hotel}${phoneNumber}`;
@@ -80,6 +84,7 @@ const TapNFC: React.FC = () => {
     execHaloCmdWeb(command, options)
       .then(async (res: any) => {
         setStatusText(JSON.stringify(res, null, 4));
+        setStatusTextA(JSON.stringify(res, null, 4));
         console.log(JSON.stringify(res, null, 4));
         handleSecretSharing();
       })
@@ -92,33 +97,21 @@ const TapNFC: React.FC = () => {
   return (
     <div className="container mt-3 mb-5">
       <strong>Status text:</strong>
-      <pre id="statusText" style={{ whiteSpace: "pre-wrap", wordBreak: "break-all" }}>
+      {/* <pre id="statusText" style={{ whiteSpace: "pre-wrap", wordBreak: "break-all" }}>
         {statusText}
-      </pre>
+      </pre> */}
       <input type="text" placeholder="Name" value={name} onChange={handleInputChange} />
       <input type="text" placeholder="Surname" value={surname} onChange={handleInputChange} />
       <input type="text" placeholder="Hotel" value={hotel} onChange={handleInputChange} />
       <input type="text" placeholder="Phone Number" value={phoneNumber} onChange={handleInputChange} />
       <button className="btn btn-primary" onClick={() => handleSecretSharing()} id="btn-auto">
-        Secret
+        Register Personal Information
       </button>
-      <button className="btn btn-primary" onClick={() => executeNFC(null)} id="btn-auto">
-        Sign using auto-detected method
-      </button>
-      <button className="btn btn-secondary" onClick={() => executeNFC("credential")} id="btn-credential">
-        Sign using Credential API
-      </button>
-      <button className="btn btn-secondary" onClick={() => executeNFC("webnfc")} id="btn-webnfc">
-        Sign using WebNFC
-      </button>
-      {/* <p>Shares:</p>
-      <pre id="shares" style={{ whiteSpace: "pre-wrap", wordBreak: "break-all" }}>
-        {shares.map(buffer => buffer.toString("utf8")).join(", ")}
-      </pre>
-      <p>Recovered</p>
-      <pre id="recovered" style={{ whiteSpace: "pre-wrap", wordBreak: "break-all" }}>
-        {recovered ? recovered.map(buffer => buffer.toString("utf8")).join(", ") : ""}{" "}
-      </pre> */}
+      <Link href="./main">
+        <button className="btn btn-primary" onClick={() => executeNFC(null)} id="btn-auto">
+          Sign In
+        </button>
+      </Link>
     </div>
   );
 };

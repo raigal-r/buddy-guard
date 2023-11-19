@@ -1,5 +1,5 @@
 import { connectorsForWallets } from "@rainbow-me/rainbowkit";
-import { walletConnectWallet } from "@rainbow-me/rainbowkit/wallets";
+import { metaMaskWallet, walletConnectWallet } from "@rainbow-me/rainbowkit/wallets";
 import * as chains from "viem/chains";
 import { configureChains } from "wagmi";
 import { alchemyProvider } from "wagmi/providers/alchemy";
@@ -36,8 +36,7 @@ export const appChains = configureChains(
 );
 
 const walletsOptions = { chains: appChains.chains, projectId: scaffoldConfig.walletConnectProjectId };
-const wallets = [walletConnectWallet(walletsOptions)];
-
+const wallets = [metaMaskWallet({ ...walletsOptions, shimDisconnect: true }), walletConnectWallet(walletsOptions)];
 /**
  * wagmi connectors for the wagmi context
  */
