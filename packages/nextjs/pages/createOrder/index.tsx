@@ -1,8 +1,29 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { addGuardian, cancelOrder, createOrder, trigExpiredOrder } from "../../utils/buddyContract";
 import type { NextPage } from "next";
 
+const contractAddress = "0x305bfBBE058aaCD760E7d6D611dbF780e25b5680";
+const contractABI = [
+  "function createOrder(address _token, uint256 _stake) external",
+  "function addGuardian(uint256 _orderId, address _guardian) external",
+  "function cancelOrder(uint256 _orderId) external",
+  "function trigExpiredOrder(uint256 _orderId) external",
+];
+
 const CreateOrder: NextPage = () => {
+  const router = useRouter();
+
+  const handleCreateOrder = async () => {
+    const token = "0xcbE9771eD31e761b744D3cB9eF78A1f32DD99211";
+    const stake = 10000000;
+    await createOrder(token, stake);
+    router.push("/createBuddyGuard");
+  };
+
   return (
     <div className="container mx-auto ">
       <div className=" flex flex-col items-center justify-center px-5 ">
@@ -48,11 +69,14 @@ const CreateOrder: NextPage = () => {
         </form>
 
         <div className="rounded-full p-2 border-2 border-[#058050] hover:border-[#ff8200] mb-8 mt-4">
-          <Link href="./createBuddyGuard">
-            <button className="bg-[#058050] hover:bg-[#ff8200] rounded-full w-40 h-40 font-bold text-lg  text-white p-3 ">
-              Leave Soon
-            </button>
-          </Link>
+          {/* <Link href="./createBuddyGuard"> */}
+          <button
+            onClick={handleCreateOrder}
+            className="bg-[#058050] hover:bg-[#ff8200] rounded-full w-40 h-40 font-bold text-lg  text-white p-3 "
+          >
+            Leave Soon
+          </button>
+          {/* </Link> */}
         </div>
         {/* <button className="bg-[#058050] mt-4 w-48 py-4 rounded-xl  text-white font-semibold">Home</button> */}
       </div>

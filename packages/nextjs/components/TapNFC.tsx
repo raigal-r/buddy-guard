@@ -112,7 +112,7 @@ const TapNFC: React.FC = () => {
       </button>
       <Link href="./main">
         <button className="btn btn-primary" onClick={() => executeNFC(null)} id="btn-auto">
-          Sign In
+          Log In
         </button>
       </Link>
     </div>

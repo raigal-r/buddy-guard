@@ -14,27 +14,21 @@ export type ForegroundTapModalProps = {
 };
 
 const Home: NextPage = () => {
-  // const [pubKey, setPubKey] = useState<string>("");
-  // const [rawSig, setRawSig] = useState<string>("");
-  // const [digest, setDigest] = useState<string>("");
-
-  // useEffect(() => {
-  //   console.log("pubKey", pubKey);
-  //   console.log("rawSig", rawSig);
-  //   console.log("digest", digest);
-  //   setIsForeground(false);
-  // }, [pubKey]);
-
   return (
     <>
       <MetaHeader />
-      <div className="flex items-center flex-col flex-grow pt-10">
-        <>
+      <div className="container mx-auto mt-4">
+        <div className="flex flex-col gap-6  px-5">
+          <div className="flex flex-col gap-4 ">
+            <div className="text-4xl ">Wellcome!</div>
+            {/* <div className="text-xl">Your Wallet : 0x193sfa938202</div> */}
+          </div>
+          <span className="text-xl font-medium ">Register SOS Information & LogIn!</span>
           <div>
             <TapNFC />
             <DirectMessage />
           </div>
-        </>
+        </div>
       </div>
     </>
   );
