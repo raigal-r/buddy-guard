@@ -20,7 +20,7 @@ const Home: NextPage = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowLanding(false);
-    }, 4000); // 4 seconds
+    }, 3000); // 3 seconds
 
     return () => clearTimeout(timer);
   }, []);
