@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from "react";
 import { useContext } from "react";
+import Link from "next/link";
 import { StatusContext } from "../pages/_app";
 import { execHaloCmdWeb } from "@arx-research/libhalo/api/web.js";
 import { ethers } from "ethers";
@@ -106,9 +107,11 @@ const TapNFC: React.FC = () => {
       <button className="btn btn-primary" onClick={() => handleSecretSharing()} id="btn-auto">
         Secret
       </button>
-      <button className="btn btn-primary" onClick={() => executeNFC(null)} id="btn-auto">
-        Sign using auto-detected method
-      </button>
+      <Link href="./main">
+        <button className="btn btn-primary" onClick={() => executeNFC(null)} id="btn-auto">
+          Sign using auto-detected method
+        </button>
+      </Link>
       <button className="btn btn-secondary" onClick={() => executeNFC("credential")} id="btn-credential">
         Sign using Credential API
       </button>
