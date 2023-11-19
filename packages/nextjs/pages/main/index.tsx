@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import type { NextPage } from "next";
 
 const Main: NextPage = () => {
@@ -30,7 +31,9 @@ const Main: NextPage = () => {
                 <span> 04:00 AM</span>
               </div>
             </div>
-            <button className="mt-4 w-full p-2 rounded-lg bg-white text-gray-800 font-semibold">VISIT EVENT</button>
+            <Link href="./createOrder">
+              <button className="mt-4 w-full p-2 rounded-lg bg-white text-gray-800 font-semibold">VISIT EVENT</button>
+            </Link>
           </div>
         </div>
         <div className="w-full h-auto  p-4 bg-[#F1CF39] rounded-md  text-white ">

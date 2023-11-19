@@ -1,51 +1,8 @@
-import { useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import type { NextPage } from "next";
-import { hardhat } from "viem/chains";
-import { useFetchBlocks } from "~~/hooks/scaffold-eth";
-import { getTargetNetwork, notification } from "~~/utils/scaffold-eth";
 
 const CreateOrder: NextPage = () => {
-  const { error } = useFetchBlocks();
-
-  useEffect(() => {
-    if (getTargetNetwork().id === hardhat.id && error) {
-      notification.error(
-        <>
-          <p className="font-bold mt-0 mb-1">Cannot connect to local provider</p>
-          <p className="m-0">
-            - Did you forget to run <code className="italic bg-base-300 text-base font-bold">yarn chain</code> ?
-          </p>
-          <p className="mt-1 break-normal">
-            - Or you can change <code className="italic bg-base-300 text-base font-bold">targetNetwork</code> in{" "}
-            <code className="italic bg-base-300 text-base font-bold">scaffold.config.ts</code>
-          </p>
-        </>,
-      );
-    }
-
-    if (getTargetNetwork().id !== hardhat.id) {
-      notification.error(
-        <>
-          <p className="font-bold mt-0 mb-1">
-            <code className="italic bg-base-300 text-base font-bold"> targeNetwork </code> is not localhost
-          </p>
-          <p className="m-0">
-            - You are on <code className="italic bg-base-300 text-base font-bold">{getTargetNetwork().name}</code> .This
-            block explorer is only for <code className="italic bg-base-300 text-base font-bold">localhost</code>.
-          </p>
-          <p className="mt-1 break-normal">
-            - You can use{" "}
-            <a className="text-accent" href={getTargetNetwork().blockExplorers?.default.url}>
-              {getTargetNetwork().blockExplorers?.default.name}
-            </a>{" "}
-            instead
-          </p>
-        </>,
-      );
-    }
-  }, [error]);
-
   return (
     <div className="container mx-auto ">
       <div className=" flex flex-col items-center justify-center px-5 ">
@@ -91,9 +48,11 @@ const CreateOrder: NextPage = () => {
         </form>
 
         <div className="rounded-full p-2 border-2 border-[#058050] hover:border-[#ff8200] mb-8 mt-4">
-          <button className="bg-[#058050] hover:bg-[#ff8200] rounded-full w-40 h-40 font-bold text-lg  text-white p-3 ">
-            Leave Soon
-          </button>
+          <Link href="./createBuddyGuard">
+            <button className="bg-[#058050] hover:bg-[#ff8200] rounded-full w-40 h-40 font-bold text-lg  text-white p-3 ">
+              Leave Soon
+            </button>
+          </Link>
         </div>
         {/* <button className="bg-[#058050] mt-4 w-48 py-4 rounded-xl  text-white font-semibold">Home</button> */}
       </div>

@@ -1,73 +1,58 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { useContext, useState } from "react";
 import Image from "next/image";
+import { StatusContext } from "../../pages/_app";
+import { execHaloCmdWeb } from "@arx-research/libhalo/api/web.js";
 import type { NextPage } from "next";
 
 const CreateBuddyGuard: NextPage = () => {
-  // const { error } = useFetchBlocks();
+  const [legacySignCommand] = useState(false);
+  const [digest] = useState("0101010101010101010101010101010101010101010101010101010101010101");
+  const [keyNo] = useState("1");
+  const [password] = useState("");
+  const [statusText, setStatusTextA] = useState("Please click on one of the buttons below.");
 
-  // useEffect(() => {
-  //   if (getTargetNetwork().id === hardhat.id && error) {
-  //     notification.error(
-  //       <>
-  //         <p className="font-bold mt-0 mb-1">Cannot connect to local provider</p>
-  //         <p className="m-0">
-  //           - Did you forget to run <code className="italic bg-base-300 text-base font-bold">yarn chain</code> ?
-  //         </p>
-  //         <p className="mt-1 break-normal">
-  //           - Or you can change <code className="italic bg-base-300 text-base font-bold">targetNetwork</code> in{" "}
-  //           <code className="italic bg-base-300 text-base font-bold">scaffold.config.ts</code>
-  //         </p>
-  //       </>,
-  //     );
-  //   }
+  const { setStatusText } = useContext(StatusContext);
 
-  //   if (getTargetNetwork().id !== hardhat.id) {
-  //     notification.error(
-  //       <>
-  //         <p className="font-bold mt-0 mb-1">
-  //           <code className="italic bg-base-300 text-base font-bold"> targeNetwork </code> is not localhost
-  //         </p>
-  //         <p className="m-0">
-  //           - You are on <code className="italic bg-base-300 text-base font-bold">{getTargetNetwork().name}</code> .This
-  //           block explorer is only for <code className="italic bg-base-300 text-base font-bold">localhost</code>.
-  //         </p>
-  //         <p className="mt-1 break-normal">
-  //           - You can use{" "}
-  //           <a className="text-accent" href={getTargetNetwork().blockExplorers?.default.url}>
-  //             {getTargetNetwork().blockExplorers?.default.name}
-  //           </a>{" "}
-  //           instead
-  //         </p>
-  //       </>,
-  //     );
-  //   }
-  // }, [error]);
+  const executeNFC = (method: string | null) => {
+    setStatusText("Tap the tag to the back of your smartphone and hold it for a while.");
+
+    const options = {
+      method: method,
+    };
+
+    const command = {
+      name: "sign",
+      keyNo: keyNo,
+      digest: digest,
+      legacySignCommand: legacySignCommand,
+      password: password,
+    };
+
+    execHaloCmdWeb(command, options)
+      .then(async (res: any) => {
+        setStatusText(JSON.stringify(res, null, 4));
+        setStatusTextA(JSON.stringify(res, null, 4));
+        console.log(JSON.stringify(res, null, 4));
+      })
+      .catch((e: Error) => {
+        console.error("execHaloCmdWeb error", e);
+        setStatusText(e.toString());
+      });
+  };
 
   return (
     <div className="container mx-auto ">
       <div className=" flex flex-col items-center justify-center px-5 ">
         <div className="flex flex-col text-center justify-center items-center mb-8 ">
           <div className="text-3xl font-medium">Add Your Buddy-Guard!</div>
-          {/* <div className="relative w-40 h-40">
-            <Image alt="raave" className="cursor-pointer" fill src="/ravve.png" />
-          </div> */}
-
-          {/* <div className="pl-2">
-            <span>Wednesday, November 15</span>
-            <div>
-              {" "}
-              <span className="font-medium">Start Time:</span>
-              <span> 08:00 PM</span>
-            </div>
-            <div>
-              {" "}
-              <span className="font-medium">End Time:</span>
-              <span> 04:00 AM</span>
-            </div>
-          </div> */}
         </div>
 
         <div className="rounded-full p-2 border-2 border-[#058050] hover:border-[#ff8200] my-8 ">
-          <button className=" font-bold text-lg  bg-[#058050] hover:bg-[#ff8200] rounded-full w-40 h-40  text-white p-3 ">
+          <button
+            onClick={() => executeNFC(null)}
+            className=" font-bold text-lg  bg-[#058050] hover:bg-[#ff8200] rounded-full w-40 h-40  text-white p-3 "
+          >
             Add
             <br /> Buddy-Guard
           </button>
