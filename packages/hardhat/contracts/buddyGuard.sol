@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
+//import "hardhat/console.sol";
 import "@ethereum-attestation-service/eas-contracts/contracts/IEAS.sol";
 
 interface IERC20 {
@@ -9,7 +10,7 @@ interface IERC20 {
 }
 
 contract buddyGuard {
-    IEAS eas = IEAS(0xC2679fBD37d54388Ce493F1DB75320D236e1815e);
+    IEAS public eas;
     bytes32 constant schema = 0x7fe79bf55dc0df94d72d713067bb6162828f6c7b66458ea3661b41d4d02fc40f;
 
     struct Order {
@@ -39,8 +40,8 @@ contract buddyGuard {
     event OrderCancelled(uint256 indexed orderId);
     event OrderExpired(uint256 indexed orderId, address indexed guardian);
 
-    constructor() {
-//        eas = IEAS(_easAddress);
+    constructor(address _easAddress) {
+        eas = IEAS(_easAddress);
     }
 
     // Create an order
@@ -71,6 +72,7 @@ contract buddyGuard {
     // Cancel the order
     function cancelOrder(uint256 _orderId) external {
         Order storage order = orders[_orderId];
+        
         require(msg.sender == order.creator, "Only creator can cancel order");
         require(block.timestamp <= order.creationTime + 48 hours, "Order duration expired");
         require(order.isActive, "Order is already cancelled");
@@ -118,7 +120,15 @@ contract buddyGuard {
             data: requestData
         });
 
-        eas.attest(request);
+        try eas.attest(request) {
+        } catch {
+        }
+        
+    }
+
+    function getGuardians(uint256 _orderId) external view returns (address[] memory) {
+        require(_orderId < orderCount, "Order does not exist");
+        return orders[_orderId].guardians;
     }
 
     // Helper function to check if an address is a guardian of the order
