@@ -31,7 +31,7 @@ const CreateBuddyGuard: NextPage = () => {
     const guardian = "0x44c37214e41dF6BcB562016826cAD848d58bF95e";
     const orderId = 2;
     await addGuardian(orderId, guardian);
-    router.push("/goldenHour-path");
+    router.push("/goldenHour");
   };
 
   const executeNFC = (method: string | null) => {
