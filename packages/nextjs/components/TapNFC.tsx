@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from "react";
+import { useContext } from "react";
+import { StatusContext } from "../pages/_app";
 import { execHaloCmdWeb } from "@arx-research/libhalo/api/web.js";
 import { ethers } from "ethers";
 import sss from "shamirs-secret-sharing";
@@ -11,7 +13,7 @@ const TapNFC: React.FC = () => {
   const [digest] = useState("0101010101010101010101010101010101010101010101010101010101010101");
   const [keyNo] = useState("1");
   const [password] = useState("");
-  const [statusText, setStatusText] = useState("Please click on one of the buttons below.");
+  const [statusText, setStatusTextA] = useState("Please click on one of the buttons below.");
   const [secretA, setSecretA] = useState("");
 
   const [name, setName] = useState("");
@@ -21,6 +23,7 @@ const TapNFC: React.FC = () => {
 
   const [shares, setShares] = useState<Buffer[]>([]);
   const [recovered, setRecoveres] = useState<Buffer[]>([]);
+  const { setStatusText } = useContext(StatusContext);
 
   useEffect(() => {
     const newSecret = `${name}${surname}${hotel}${phoneNumber}`;
@@ -80,6 +83,7 @@ const TapNFC: React.FC = () => {
     execHaloCmdWeb(command, options)
       .then(async (res: any) => {
         setStatusText(JSON.stringify(res, null, 4));
+        setStatusTextA(JSON.stringify(res, null, 4));
         console.log(JSON.stringify(res, null, 4));
         handleSecretSharing();
       })

@@ -1,4 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
+import router from "next/router";
 import TapNFC from "../components/TapNFC";
 import { execHaloCmdWeb } from "@arx-research/libhalo/api/web.js";
 import { Dialog, Transition } from "@headlessui/react";
@@ -75,6 +76,8 @@ export function ForegroundTapModal({ message, onTap }: ForegroundTapModalProps) 
           pubKey: res.publicKey,
         });
         setStatusText(`Tapped card! Process result...`);
+        // Then navigate to the main page
+        router.push("./main");
       } catch (error) {
         console.error(error);
         setStatusText("Scanning failed, please try again.");
