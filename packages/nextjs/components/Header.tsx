@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useAccount } from "wagmi";
 import { FaucetButton, RainbowKitCustomConnectButton } from "~~/components/scaffold-eth";
 
 interface HeaderMenuLink {
@@ -58,6 +59,7 @@ export const Header = () => {
   //   burgerMenuRef,
   //   useCallback(() => setIsDrawerOpen(false), []),
   // );
+  const accountState = useAccount();
 
   return (
     <div className="sticky lg:static top-0 navbar bg-base-100 min-h-0 flex-shrink-0 justify-between z-20 px-0 sm:px-0">
@@ -80,7 +82,11 @@ export const Header = () => {
         </ul>
       </div>
       <div className="navbar-end flex-grow mr-4">
-        <RainbowKitCustomConnectButton />
+        {!accountState.isConnected && (
+          <>
+            <RainbowKitCustomConnectButton />
+          </>
+        )}
         <FaucetButton />
       </div>
     </div>
