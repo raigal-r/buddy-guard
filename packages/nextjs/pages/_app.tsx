@@ -23,8 +23,17 @@ export const StatusContext = React.createContext({
   setStatusText: (newStatus: string) => {},
 });
 
+export const SecretContext = React.createContext({
+  statusSecret: "",
+  setStatusSecret: (newStatus: string) => {},
+  shares: [] as Buffer[],
+  setShares: (newShares: Buffer[]) => {},
+});
+
 const ScaffoldEthApp = ({ Component, pageProps }: AppProps) => {
   const [statusText, setStatusText] = React.useState("Waiting for NFC setup...");
+  const [statusSecret, setStatusSecret] = React.useState(""); // Add this line
+  const [buffer, setBuffer] = React.useState<Buffer | null>(null); // Add this line
 
   const price = useNativeCurrencyPrice();
   const setNativeCurrencyPrice = useGlobalState(state => state.setNativeCurrencyPrice);
@@ -50,7 +59,9 @@ const ScaffoldEthApp = ({ Component, pageProps }: AppProps) => {
           <Header />
           <main className="relative flex flex-col flex-1">
             <StatusContext.Provider value={{ statusText, setStatusText }}>
-              <Component {...pageProps} />
+              <SecretContext.Provider value={{ statusSecret, setStatusSecret, shares: [], setShares: () => {} }}>
+                <Component {...pageProps} />
+              </SecretContext.Provider>
             </StatusContext.Provider>
           </main>
           <Footer />
