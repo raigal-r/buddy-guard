@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useContext, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { StatusContext } from "../../pages/_app";
 import { execHaloCmdWeb } from "@arx-research/libhalo/api/web.js";
 import type { NextPage } from "next";
@@ -49,13 +50,15 @@ const CreateBuddyGuard: NextPage = () => {
         </div>
 
         <div className="rounded-full p-2 border-2 border-[#058050] hover:border-[#ff8200] my-8 ">
-          <button
-            onClick={() => executeNFC(null)}
-            className=" font-bold text-lg  bg-[#058050] hover:bg-[#ff8200] rounded-full w-40 h-40  text-white p-3 "
-          >
-            Add
-            <br /> Buddy-Guard
-          </button>
+          <Link href="./goldenHour">
+            <button
+              onClick={() => executeNFC(null)}
+              className=" font-bold text-lg  bg-[#058050] hover:bg-[#ff8200] rounded-full w-40 h-40  text-white p-3 "
+            >
+              Add
+              <br /> Buddy-Guard
+            </button>
+          </Link>
         </div>
         <div className="flex flex-col gap-2 w-full">
           <div className="text-2xl font-medium mb-8 mt-10">Today Buddy Guard List</div>
