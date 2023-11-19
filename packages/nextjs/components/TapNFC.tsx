@@ -98,23 +98,73 @@ const TapNFC: React.FC = () => {
   };
 
   return (
-    <div className="container mt-3 mb-5">
-      <strong>Status text:</strong>
-      {/* <pre id="statusText" style={{ whiteSpace: "pre-wrap", wordBreak: "break-all" }}>
+    <div className="container mx-auto ">
+      <div className="flex flex-col gap-6  px-5">
+        <div className="flex flex-col gap-4 ">
+          <div className="text-4xl ">Register Your NFC</div>
+        </div>
+        <div className="flex flex-col gap-2 container mt-3 mb-5">
+          {/* <pre id="statusText" style={{ whiteSpace: "pre-wrap", wordBreak: "break-all" }}>
         {statusText}
       </pre> */}
-      <input type="text" placeholder="Name" value={name} onChange={handleInputChange} />
-      <input type="text" placeholder="Surname" value={surname} onChange={handleInputChange} />
-      <input type="text" placeholder="Hotel" value={hotel} onChange={handleInputChange} />
-      <input type="text" placeholder="Phone Number" value={phoneNumber} onChange={handleInputChange} />
-      <button className="btn btn-primary" onClick={() => handleSecretSharing()} id="btn-auto">
-        Register Personal Information
-      </button>
-      <Link href="./main">
-        <button className="btn btn-primary" onClick={() => executeNFC(null)} id="btn-auto">
-          Sign In
-        </button>
-      </Link>
+          <div>
+            <span className="text-lg font-medium">First Name</span>
+            <input
+              className="p-2 border-2 ml-11 mb-2 rounded-md border-gray-400 "
+              type="text"
+              placeholder="Name"
+              value={name}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div>
+            <span className="text-lg font-medium">Surname</span>
+            <input
+              className="p-2 border-2 ml-14 mb-2 rounded-md border-gray-400 "
+              type="text"
+              placeholder="Surname"
+              value={surname}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div>
+            <span className="text-lg font-medium">Hotel Name</span>
+            <input
+              className="p-2 border-2 ml-9 mb-2 rounded-md border-gray-400 "
+              type="text"
+              placeholder="Hotel"
+              value={hotel}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div>
+            <span className="text-lg font-medium">Phone Number</span>
+            <input
+              className="p-2 border-2 ml-2 mb-2 rounded-md border-gray-400 "
+              type="text"
+              placeholder="Phone Number"
+              value={phoneNumber}
+              onChange={handleInputChange}
+            />
+          </div>
+          <button
+            className="p-4 bg-[#058050] rounded-md my-4 text-white font-medium text-lg"
+            onClick={() => handleSecretSharing()}
+            id="btn-auto"
+          >
+            Register Personal Information
+          </button>
+          <Link href="./main">
+            <button
+              className="p-4 bg-[#ff8200] rounded-md w-full text-white font-medium text-xl"
+              onClick={() => executeNFC(null)}
+              id="btn-auto"
+            >
+              Sign In
+            </button>
+          </Link>
+        </div>
+      </div>
     </div>
   );
 };
