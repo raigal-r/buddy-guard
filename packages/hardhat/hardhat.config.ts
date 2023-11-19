@@ -1,133 +1,183 @@
-import * as dotenv from "dotenv";
-dotenv.config();
-import { HardhatUserConfig } from "hardhat/config";
-import "@nomicfoundation/hardhat-toolbox";
-import "hardhat-deploy";
-import "@matterlabs/hardhat-zksync-solc";
-import "@matterlabs/hardhat-zksync-verify";
+require('dotenv').config()
 
-// If not set, it uses ours Alchemy's default API key.
-// You can get your own at https://dashboard.alchemyapi.io
-const providerApiKey = process.env.ALCHEMY_API_KEY || "oKxs-03sij-U_N0iOlrSsZFr29-IqbuF";
-// If not set, it uses the hardhat account 0 private key.
-const deployerPrivateKey =
-  process.env.DEPLOYER_PRIVATE_KEY ?? "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80";
-// If not set, it uses ours Etherscan default API key.
-const etherscanApiKey = process.env.ETHERSCAN_API_KEY || "DNXJA8RX2Q3VZ4URQIWP7Z68CJXQZSC6AW";
+require('@openzeppelin/hardhat-upgrades')
+require('@nomiclabs/hardhat-etherscan')
+require('@nomiclabs/hardhat-waffle')
+require('hardhat-gas-reporter')
+require('solidity-coverage')
+require('hardhat-contract-sizer')
+require('hardhat-abi-exporter')
+require('hardhat-log-remover')
+require('@openzeppelin/hardhat-upgrades')
 
-const config: HardhatUserConfig = {
+// This is a sample Hardhat task. To learn how to create your own go to
+// https://hardhat.org/guides/create-task.html
+task('accounts', 'Prints the list of accounts', async (taskArgs, hre) => {
+  const accounts = await hre.ethers.getSigners()
+
+  for (const account of accounts) {
+    console.log(account.address)
+  }
+})
+
+const PRIVATE_KEY = "";
+
+// You need to export an object to set up your config
+// Go to https://hardhat.org/config/ to learn more
+
+/**
+ * @type import('hardhat/config').HardhatUserConfig
+ */
+module.exports = {
   solidity: {
-    version: "0.8.17",
+    version: '0.8.18',
     settings: {
       optimizer: {
         enabled: true,
-        // https://docs.soliditylang.org/en/latest/using-the-compiler.html#optimizer-options
         runs: 200,
       },
-    },
-  },
-  defaultNetwork: "localhost",
-  namedAccounts: {
-    deployer: {
-      // By default, it will take the first Hardhat account as the deployer
-      default: 0,
+      outputSelection: {
+        '*': {
+          '*': ['storageLayout'],
+        },
+      },
     },
   },
   networks: {
-    // View the networks that are pre-configured.
-    // If the network you are looking for is not here you can add new network settings
     hardhat: {
-      forking: {
-        url: `https://eth-mainnet.alchemyapi.io/v2/${providerApiKey}`,
-        enabled: process.env.MAINNET_FORKING_ENABLED === "true",
+      initialBaseFeePerGas: 0, // workaround from https://github.com/sc-forks/solidity-coverage/issues/652#issuecomment-896330136 . Remove when that issue is closed.
+      accounts: {
+        mnemonic: process.env.SEED !== undefined ? process.env.SEED : '',
       },
     },
-    mainnet: {
-      url: `https://eth-mainnet.alchemyapi.io/v2/${providerApiKey}`,
-      accounts: [deployerPrivateKey],
+    ropsten: {
+      url: process.env.ROPSTEN_URL || '',
+      accounts:
+        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
     },
-    sepolia: {
-      url: `https://eth-sepolia.g.alchemy.com/v2/${providerApiKey}`,
-      accounts: [deployerPrivateKey],
+    sepolia:{
+      url: '' ,
+      accounts:[`${PRIVATE_KEY}`],      
     },
-    goerli: {
-      url: `https://eth-goerli.alchemyapi.io/v2/${providerApiKey}`,
-      accounts: [deployerPrivateKey],
+    chiado:{
+      url: 'https://rpc.chiado.gnosis.gateway.fm/' ,
+      accounts:[`${PRIVATE_KEY}`],      
     },
-    arbitrum: {
-      url: `https://arb-mainnet.g.alchemy.com/v2/${providerApiKey}`,
-      accounts: [deployerPrivateKey],
+    goerli:{
+      url: '' ,
+      accounts:[`${PRIVATE_KEY}`],      
     },
-    arbitrumGoerli: {
-      url: `https://arb-goerli.g.alchemy.com/v2/${providerApiKey}`,
-      accounts: [deployerPrivateKey],
+    rinkeby: {
+      url: process.env.RINKEBY_URL || '',
+      accounts:
+        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
     },
-    optimism: {
-      url: `https://opt-mainnet.g.alchemy.com/v2/${providerApiKey}`,
-      accounts: [deployerPrivateKey],
-    },
-    optimismGoerli: {
-      url: `https://opt-goerli.g.alchemy.com/v2/${providerApiKey}`,
-      accounts: [deployerPrivateKey],
+    bscTestnet: {
+      url: '',
+      accounts: [`${PRIVATE_KEY}`],
     },
     polygon: {
-      url: `https://polygon-mainnet.g.alchemy.com/v2/${providerApiKey}`,
-      accounts: [deployerPrivateKey],
+      url: '' ,
+      accounts:[`${PRIVATE_KEY}`],
     },
     polygonMumbai: {
-      url: `https://polygon-mumbai.g.alchemy.com/v2/${providerApiKey}`,
-      accounts: [deployerPrivateKey],
+      url: '',
+      accounts: [`${PRIVATE_KEY}`],
     },
-    polygonZkEvm: {
-      url: `https://polygonzkevm-mainnet.g.alchemy.com/v2/${providerApiKey}`,
-      accounts: [deployerPrivateKey],
+    mainnet: {
+      url: process.env.MAINNET_URL || '',
+      accounts: [`${PRIVATE_KEY}`],
     },
-    polygonZkEvmTestnet: {
-      url: `https://polygonzkevm-testnet.g.alchemy.com/v2/${providerApiKey}`,
-      accounts: [deployerPrivateKey],
+    arbitrumGoerli: {
+      url: '' ,
+      accounts:[`${PRIVATE_KEY}`],
     },
-    zkSyncTestnet: {
-      url: "https://testnet.era.zksync.dev",
-      zksync: true,
-      accounts: [deployerPrivateKey],
-      verifyURL: "https://zksync2-testnet-explorer.zksync.dev/contract_verification",
+    polygonZk: {
+      url: 'https://rpc.public.zkevm-test.net' ,
+      accounts:[`${PRIVATE_KEY}`],
     },
-    zkSync: {
-      url: "https://mainnet.era.zksync.io",
-      zksync: true,
-      accounts: [deployerPrivateKey],
-      verifyURL: "https://zksync2-mainnet-explorer.zksync.io/contract_verification",
+    lineaTest: {
+      url: '' ,
+      accounts:[`${PRIVATE_KEY}`],
     },
-    gnosis: {
-      url: "https://rpc.gnosischain.com",
-      accounts: [deployerPrivateKey],
+    mantleTest: {
+      url: 'https://rpc.testnet.mantle.xyz/' ,
+      accounts:[`${PRIVATE_KEY}`],
     },
-    chiado: {
-      url: "https://rpc.chiadochain.net",
-      accounts: [deployerPrivateKey],
-    },
-    base: {
-      url: "https://mainnet.base.org",
-      accounts: [deployerPrivateKey],
-    },
-    baseGoerli: {
-      url: "https://goerli.base.org",
-      accounts: [deployerPrivateKey],
-    },
-    scrollSepolia: {
-      url: "https://sepolia-rpc.scroll.io",
-      accounts: [deployerPrivateKey],
-    },
-    scroll: {
-      url: "https://rpc.scroll.io",
-      accounts: [deployerPrivateKey],
+    scrollTest: {
+      url: 'https://sepolia-rpc.scroll.io/' ,
+      accounts:[`${PRIVATE_KEY}`],
     },
   },
-  verify: {
-    etherscan: {
-      apiKey: `${etherscanApiKey}`,
-    },
+  gasReporter: {
+    enabled: process.env.REPORT_GAS !== undefined,
+    currency: 'USD',
+    gasPrice: 200,
+    showTimeSpent: true,
+    coinmarketcap: process.env.COINMARKETCAP_API,
+    // outputFile: './gasReporter',
+    // noColors: true,
   },
-};
-
-export default config;
+  etherscan: {
+    apiKey: {
+      bscTestnet: '',
+      mainnet: process.env.ETHERSCAN_API_KEY,
+      polygonMumbai: '',
+      polygon: '',
+      sepolia: '',
+      goerli: '',
+      arbitrumGoerli: '',
+      polygonZk: '',
+      lineaTest:'',
+      scrollTest:'',
+    },
+    customChains: [
+      {
+        network: "polygonZk",
+        chainId: 1442,
+        urls: {
+          apiURL: "https://api-testnet-zkevm.polygonscan.com/api",
+          browserURL: "https://testnet-zkevm.polygonscan.com"
+        }
+      },
+      {
+        network: "lineaTest",
+        chainId: 59140,
+        urls: {
+          apiURL: "https://api-testnet.lineascan.build/api",
+          browserURL: "https://goerli.lineascan.build"
+        }
+      },
+      {
+        network: "scrollTest",
+        chainId: 534351,
+        urls: {
+          apiURL: "https://api-sepolia.scrollscan.com/api",
+          browserURL: "https://sepolia.scrollscan.com"
+        }
+      }
+    ]
+  },
+  contractSizer: {
+    alphaSort: true,
+    runOnCompile: true,
+    disambiguatePaths: false,
+  },
+  abiExporter: [
+    {
+      path: './abi/',
+      clear: true,
+      flat: true,
+      only: ['buddyGuard'],
+      spacing: 2,
+      pretty: true,
+    },
+    {
+      path: './abi/ugly',
+      only: ['buddyGuard'],
+      clear: true,
+      flat: true,
+      pretty: false,
+    },
+  ],
+}

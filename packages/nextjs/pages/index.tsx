@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import router from "next/router";
 import TapNFC from "../components/TapNFC";
+import Landing from "./landing";
 import { execHaloCmdWeb } from "@arx-research/libhalo/api/web.js";
 import { Dialog, Transition } from "@headlessui/react";
 import { NfcCardSignMessageResult } from "jubmoji-api";
@@ -14,6 +15,31 @@ export type ForegroundTapModalProps = {
 };
 
 const Home: NextPage = () => {
+  const [showLanding, setShowLanding] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowLanding(false);
+    }, 3000); // 3 seconds
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (showLanding) {
+    return <Landing />;
+  }
+
+  // const [pubKey, setPubKey] = useState<string>("");
+  // const [rawSig, setRawSig] = useState<string>("");
+  // const [digest, setDigest] = useState<string>("");
+
+  // useEffect(() => {
+  //   console.log("pubKey", pubKey);
+  //   console.log("rawSig", rawSig);
+  //   console.log("digest", digest);
+  //   setIsForeground(false);
+  // }, [pubKey]);
+
   return (
     <>
       <MetaHeader />
