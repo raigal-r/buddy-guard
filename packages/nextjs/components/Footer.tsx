@@ -1,5 +1,4 @@
 import React from "react";
-import Image from "next/image";
 import { hardhat } from "viem/chains";
 import { useGlobalState } from "~~/services/store/store";
 import { getTargetNetwork } from "~~/utils/scaffold-eth";
@@ -54,10 +53,10 @@ export const Footer = () => {
                 target="_blank"
                 rel="noreferrer"
               >
-                <div className="flex relative w-8 h-10">
+                {/* <div className="flex relative w-8 h-10">
                   {" "}
                   <Image alt="SE2 logo" className="cursor-pointer" fill src="/logo.png" />
-                </div>
+                </div> */}
               </a>
             </div>
           </div>
